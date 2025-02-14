@@ -5,7 +5,7 @@ import { Download } from '@mui/icons-material';
 const Home = () => {
   const handleDownload = () => {
     const link = document.createElement('a');
-    link.href = '/Humaima_CV_2025.pdf'; 
+    link.href = '/CV.pdf'; 
     link.download = 'CV.pdf'; // The file name when downloading
     link.click();
   };
