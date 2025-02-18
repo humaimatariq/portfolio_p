@@ -90,7 +90,7 @@ function Projects() {
                   boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)',
                 },
                 maxHeight: '500px', // Set max height for uniform size
-                animation: `${slideIn} 6.7s ease-out`, // Apply sliding animation
+                animation: `${slideIn} 4.7s ease-out`, // Apply sliding animation
                 animationDelay: `${index * 0.2}s`, // Stagger animation for each project
               }}
             >
