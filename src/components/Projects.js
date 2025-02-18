@@ -1,43 +1,59 @@
 import React from 'react';
-import { Box, Typography, Card, CardContent, CardMedia, Button } from '@mui/material';
+import { Box, Typography, Card, CardContent, CardMedia, Button, Grid } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
+import { keyframes } from '@mui/system';
 
 // Sample project data
 const projects = [
   {
     title: "Sweet Treats Website",
     description: "A beautifully designed food website showcasing various desserts.",
-    image: "./bakery.png", 
+    image: "./bakery.png",
     liveDemo: "https://test-task-nine-woad.vercel.app/",
   },
   {
     title: "User Management System",
     description: "A CRUD-based user management system using HTML, CSS, and JavaScript.",
-    image: "./user.png", 
+    image: "./user.png",
     liveDemo: "https://crud-app-using-html-css-javascript.vercel.app/",
   },
   {
     title: "Figma Design",
     description: "A Bootstrap-based website designed from a Figma prototype.",
-    image: "./keefer.png", 
+    image: "./keefer.png",
     liveDemo: "https://keefer-bootstrap-1.vercel.app/",
   },
   {
     title: "Figma Design",
     description: "A modern UI design created from a Figma prototype.",
-    image: "./redCard.png", 
+    image: "./redCard.png",
     liveDemo: "https://form-validation-on-redcard-task.vercel.app/",
   },
 ];
+
+// Animation for sliding from left to right
+const slideIn = keyframes`
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+`;
 
 function Projects() {
   return (
     <Box
       sx={{
-        py: 10,
-        px: { xs: 3, md: 6 },
-        background: 'linear-gradient(135deg, #c3cfe2, #f5f7fa)', // Gradient background
-        overflow: 'hidden', // Hide overflow to prevent scrollbars
+        py: 8,
+        px: { xs: 2, md: 6 },
+        background: '#f5f7fa', // Light background
+        overflow: 'hidden',
       }}
     >
       {/* Heading */}
@@ -46,137 +62,113 @@ function Projects() {
         align="center"
         sx={{
           fontWeight: 'bold',
-          fontSize: { xs: '2.5rem', md: '3rem' },
-          color: '#2c3e50', // Darker text color
+          fontSize: { xs: '2rem', md: '2.5rem' },
+          color: '#2c3e50', // Dark text color
           mb: 6,
-          fontFamily: 'Poppins, sans-serif', // Modern font
+          fontFamily: 'Poppins, sans-serif',
           textTransform: 'uppercase',
-          letterSpacing: 2,
-          textShadow: '2px 2px 4px rgba(0, 0, 0, 0.1)', // Subtle shadow
+          letterSpacing: 1.5,
         }}
       >
         My Projects
       </Typography>
 
-      {/* Auto-Scrolling Container */}
-      <Box
-        sx={{
-          display: 'flex',
-          animation: 'scroll 20s linear infinite', // Animation for auto-scroll
-          '@keyframes scroll': {
-            '0%': {
-              transform: 'translateX(0)', // Start from the left
-            },
-            '100%': {
-              transform: 'translateX(-100%)', // Move to the left (full width of the container)
-            },
-          },
-        }}
-      >
-        {/* Double the projects array to create a seamless loop */}
-        {[...projects, ...projects].map((project, index) => (
-          <Card
-            key={index}
-            sx={{
-              minWidth: 300, // Minimum width for each card
-              maxWidth: 350, // Maximum width for each card
-              borderRadius: 4,
-              overflow: 'hidden',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)', // Softer shadow
-              transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
-              '&:hover': {
-                transform: 'translateY(-10px)',
-                boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)', // Enhanced hover shadow
-              },
-              flexShrink: 0, // Prevent cards from shrinking
-              mx: 2, // Margin between cards
-              display: 'flex',
-              flexDirection: 'column',
-              height: '500px', // Fixed height for all cards
-            }}
-          >
-            {/* Project Image */}
-            <CardMedia
-              component="img"
-              height="200"
-              image={project.image}
-              alt={project.title}
-              sx={{ objectFit: 'cover', borderBottom: '4px solid #0277BD' }} // Add a border
-            />
-
-            {/* Project Details */}
-            <CardContent
+      {/* Projects Grid */}
+      <Grid container spacing={4} justifyContent="center">
+        {projects.map((project, index) => (
+          <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+            <Card
               sx={{
-                textAlign: 'center',
-                flexGrow: 1, // Make the content take up remaining space
+                height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between', // Align content evenly
-                p: 3,
+                borderRadius: 2,
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+                transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+                '&:hover': {
+                  transform: 'translateY(-5px)',
+                  boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)',
+                },
+                maxHeight: '500px', // Set max height for uniform size
+                animation: `${slideIn} 6.7s ease-out`, // Apply sliding animation
+                animationDelay: `${index * 0.2}s`, // Stagger animation for each project
               }}
             >
-              <Box>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontWeight: 'bold',
-                    color: '#0277BD', // Accent color
-                    fontFamily: 'Poppins, sans-serif',
-                    textTransform: 'uppercase',
-                    mb: 2,
-                    letterSpacing: 1.5,
-                    fontSize: '1.5rem', // Fixed font size for title
-                  }}
-                >
-                  {project.title}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: '#555',
-                    my: 2,
-                    fontSize: '1rem',
-                    fontFamily: 'Poppins, sans-serif',
-                    lineHeight: 1.6,
-                    minHeight: '80px', // Fixed height for description
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {project.description}
-                </Typography>
-              </Box>
+              {/* Project Image */}
+              <CardMedia
+                component="img"
+                height="200"
+                image={project.image}
+                alt={project.title}
+                sx={{ objectFit: 'cover' }}
+              />
 
-              {/* Live Demo Button */}
-              <Box sx={{ textAlign: 'center', mt: 3 }}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: '#0277BD', // Matching accent color
-                    color: '#fff',
-                    borderRadius: '25px',
-                    px: 4,
-                    py: 1.5,
-                    fontWeight: 'bold',
-                    textTransform: 'none',
-                    fontSize: '1rem',
-                    transition: 'background 0.3s ease-in-out',
-                    '&:hover': {
-                      background: '#025f9e', // Darker shade on hover
-                    },
-                  }}
-                  href={project.liveDemo}
-                  target="_blank"
-                  startIcon={<LaunchIcon />}
-                >
-                  Live Demo
-                </Button>
-              </Box>
-            </CardContent>
-          </Card>
+              {/* Project Details */}
+              <CardContent
+                sx={{
+                  flexGrow: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  p: 3,
+                }}
+              >
+                <Box>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontWeight: 'bold',
+                      color: '#0277BD', // Accent color
+                      fontFamily: 'Poppins, sans-serif',
+                      mb: 2,
+                      fontSize: '1.25rem',
+                    }}
+                  >
+                    {project.title}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: '#555',
+                      fontFamily: 'Poppins, sans-serif',
+                      lineHeight: 1.6,
+                      mb: 2,
+                    }}
+                  >
+                    {project.description}
+                  </Typography>
+                </Box>
+
+                {/* Live Demo Button */}
+                <Box sx={{ textAlign: 'center' }}>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: '#0277BD',
+                      color: '#fff',
+                      borderRadius: '25px',
+                      px: 4,
+                      py: 1,
+                      fontWeight: 'bold',
+                      textTransform: 'none',
+                      fontSize: '0.9rem',
+                      transition: 'background 0.3s ease-in-out',
+                      '&:hover': {
+                        background: '#025f9e', // Darker shade on hover
+                      },
+                    }}
+                    href={project.liveDemo}
+                    target="_blank"
+                    startIcon={<LaunchIcon />}
+                  >
+                    Live Demo
+                  </Button>
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
         ))}
-      </Box>
+      </Grid>
     </Box>
   );
 }
